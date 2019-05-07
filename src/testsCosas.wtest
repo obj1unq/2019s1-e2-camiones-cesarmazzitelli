@@ -1,0 +1,23 @@
+import cosas.*
+
+test "test contenedor portuario" {
+
+	contenedorPortuario.agregarAContenido(bumblebee)
+	contenedorPortuario.agregarAContenido(paqueteDeLadrillos)
+	assert.equals(contenedorPortuario.nivelPeligrosidad(), bumblebee.nivelPeligrosidad())
+}
+
+test "test contenedor portuario caso vacio" {
+	assert.equals(contenedorPortuario.nivelPeligrosidad(), 0)
+}
+
+test "test contenedor portuario peso" {
+	contenedorPortuario.agregarAContenido(bumblebee)
+	contenedorPortuario.agregarAContenido(knightRider)
+	assert.equals(contenedorPortuario.peso(), 1400)
+}
+
+test "test embalaje de seguridad" {
+	embalajeDeSeguridad.cosaEnvuelta(bumblebee)
+	assert.equals(embalajeDeSeguridad.peso(), bumblebee.peso())
+}
