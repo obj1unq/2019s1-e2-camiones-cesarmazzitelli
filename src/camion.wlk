@@ -18,6 +18,10 @@ object camion {
 		return cosas.filter({cosa => self.cosaMasPeligrosaQue(cosa, cosaPeligrosa.nivelPeligrosidad()) })
 	}
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad) {
-		return cosas.any({ cosa =>  self.cosaMasPeligrosaQue(cosa, nivelMaximoPeligrosidad) })
+		return not cosas.any({ cosa =>  self.cosaMasPeligrosaQue(cosa, nivelMaximoPeligrosidad) })
+	}
+	
+	method tieneAlgoQuePesaEntre(min, max) {
+		return cosas.filter({ cosa => cosa.peso().between(min, max) })
 	}
 }

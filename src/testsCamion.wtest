@@ -1,25 +1,37 @@
 import camion.*
 import cosas.*
 
-describe "tests de camion simple" {
+describe "tests de camion" {
 	fixture { 
 		camion.cargar(bumblebee)
 		camion.cargar(knightRider)
+		camion.cargar(bateriaAntiaerea)
 	}
 
 	test "test peso total del camion" {
-		assert.equals(camion.pesoTotal(), 2300)
+		assert.equals(camion.pesoTotal(), 2600)
 	}
 
 	test "objetos peligrosos" {
-		assert.equals(camion.objetosPeligrosos(12), [bumblebee])
+		assert.equals(camion.objetosPeligrosos(12), [bumblebee, bateriaAntiaerea])
 	}
 	
 	test "cosa mas peligrosa que X" {
-		assert.equals(camion.objetosMasPeligrososQue(paqueteDeLadrillos), [bumblebee, knightRider])
+		assert.equals(camion.objetosMasPeligrososQue(paqueteDeLadrillos), [bumblebee, knightRider, bateriaAntiaerea])
 	}
 	
 	test "puede circular en ruta" {
-		assert.that(camion.puedeCircularEnRuta(12))
+		assert.notThat(camion.puedeCircularEnRuta(12))
+	}
+	
+	test "tiene algo que pesa entre" {
+		assert.that(camion.tieneAlgoQuePesaEntre(5, 20))
 	}
 }
+
+
+
+
+
+
+
