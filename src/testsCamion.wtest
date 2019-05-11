@@ -3,29 +3,59 @@ import cosas.*
 
 describe "tests de camion" {
 	fixture { 
-		camion.cargar(bumblebee)
+		contenedorPortuario.agregarAContenido(bumblebee)
+		contenedorPortuario.agregarAContenido(residuosRadioactivos)
 		camion.cargar(knightRider)
+		camion.cargar(bumblebee)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(arenaAGranel)
 		camion.cargar(bateriaAntiaerea)
+		camion.cargar(contenedorPortuario)
+		camion.cargar(residuosRadioactivos)
+		camion.cargar(embalajeDeSeguridad) 
 	}
 
 	test "test peso total del camion" {
-		assert.equals(camion.pesoTotal(), 2600)
+		assert.equals(camion.pesoTotal(), 4104)	
 	}
 
 	test "objetos peligrosos" {
-		assert.equals(camion.objetosPeligrosos(12), [bumblebee, bateriaAntiaerea])
+		assert.equals(camion.objetosPeligrosos(50), [bateriaAntiaerea, contenedorPortuario, residuosRadioactivos])
 	}
 	
 	test "cosa mas peligrosa que X" {
-		assert.equals(camion.objetosMasPeligrososQue(paqueteDeLadrillos), [bumblebee, knightRider, bateriaAntiaerea])
+		assert.equals(camion.objetosMasPeligrososQue(bumblebee), [bateriaAntiaerea, contenedorPortuario, residuosRadioactivos])
 	}
 	
 	test "puede circular en ruta" {
-		assert.notThat(camion.puedeCircularEnRuta(12))
+		assert.notThat(camion.puedeCircularEnRuta(150))
+		camion.descargar(contenedorPortuario)
+		camion.descargar(residuosRadioactivos)
+		assert.that(camion.puedeCircularEnRuta(150))
+		
 	}
 	
 	test "tiene algo que pesa entre" {
-		assert.that(camion.tieneAlgoQuePesaEntre(5, 20))
+		assert.that(camion.tieneAlgoQuePesaEntre(5, 1000))
+		assert.notThat(camion.tieneAlgoQuePesaEntre(5, 7))
+	}
+	
+	test "cosa mas pesada" {
+		assert.equals(camion.cosaMasPesada(), contenedorPortuario)
+	}
+	
+	test "bultos" {
+		assert.equals(camion.totalBultos(), 14)
+	}
+	
+	test "pesos" {
+		assert.equals(camion.pesos(), [500, 800, 24, 20, 300, 930, 30, 500])
+	}
+	
+	test "reaccion al cargar ladrillos" {
+		assert.equals(paqueteDeLadrillos.ladrillos(), 12)
+		camion.cargar(paqueteDeLadrillos)
+		assert.equals(paqueteDeLadrillos.ladrillos(), 24)
 	}
 }
 

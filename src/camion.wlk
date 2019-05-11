@@ -3,14 +3,19 @@ import cosas.*
 object camion {
 	const property cosas = []
 	
-	method cargar(cosa) { cosas.add(cosa)	}
+	//Ordenaría los methods de otra forma pero para facilitar la corrección los dejo en el orden en que los hice.
+	method cargar(cosa) { cosa.estaSiendoCargada() 
+						  cosas.add(cosa)
+	}
 	method descargar(cosa) { cosas.remove(cosa) }
+	
 	method pesoTotal() = 1000 + cosas.sum({ cosa => cosa.peso() })
 	method excedidoDePeso() = self.pesoTotal() > 2500
 	
-	method peligrosidadDe(cosa) = cosa.nivelPeligrosidad()
-	method cosaMasPeligrosaQue(cosa, valor) =  self.peligrosidadDe(cosa) > valor
-	
+	//Decidí crear este method porque noté que estaba comparando el nivel de peligrosidad con diferentes valores
+	//en muchas ocaciones.
+	method cosaMasPeligrosaQue(cosa, valor) = cosa.nivelPeligrosidad() > valor
+
 	method objetosPeligrosos(nivel) {
 		return cosas.filter({ cosa => self.cosaMasPeligrosaQue(cosa, nivel) })
 	}
@@ -21,7 +26,8 @@ object camion {
 		return not cosas.any({ cosa =>  self.cosaMasPeligrosaQue(cosa, nivelMaximoPeligrosidad) })
 	}
 	
-	method tieneAlgoQuePesaEntre(min, max) {
-		return cosas.filter({ cosa => cosa.peso().between(min, max) })
-	}
+	method tieneAlgoQuePesaEntre(min, max) = cosas.any({ cosa => cosa.peso().between(min, max) })
+	method cosaMasPesada() = cosas.max({ cosa => cosa.peso() })
+	method totalBultos() = cosas.sum({ cosa => cosa.bultos() })
+	method pesos() = cosas.map({ cosa => cosa.peso() })
 }
