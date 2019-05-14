@@ -1,0 +1,63 @@
+import cosas.*
+import camion.*
+
+test "contenedor portuario" {
+
+	contenedorPortuario.agregarAContenido(bumblebee)
+	contenedorPortuario.agregarAContenido(paqueteDeLadrillos)
+	assert.equals(contenedorPortuario.nivelPeligrosidad(), bumblebee.nivelPeligrosidad())
+}
+
+test "contenedor portuario caso vacio" {
+	assert.equals(contenedorPortuario.nivelPeligrosidad(), 0)
+}
+
+test "contenedor portuario peso" {
+	contenedorPortuario.agregarAContenido(bumblebee)
+	contenedorPortuario.agregarAContenido(residuosRadioactivos)
+	assert.equals(contenedorPortuario.peso(), 900)
+}
+
+test "contenedor portuario bultos" {
+	contenedorPortuario.agregarAContenido(bumblebee)
+	contenedorPortuario.agregarAContenido(knightRider)
+	assert.equals(contenedorPortuario.bultos(), 4)
+}
+
+test "embalaje de seguridad" {
+	embalajeDeSeguridad.cosaEnvuelta(bumblebee)
+	assert.equals(embalajeDeSeguridad.peso(), bumblebee.peso())
+}
+
+test "bateria antiaerea" {
+	assert.equals(bateriaAntiaerea.peso(), 300)
+	assert.equals(bateriaAntiaerea.nivelPeligrosidad(), 100)
+	assert.equals(bateriaAntiaerea.bultos(), 2)
+}
+
+test "bultos ladrillos" {
+	paqueteDeLadrillos.ladrillos(50)
+	assert.equals(paqueteDeLadrillos.bultos(), 1)
+	paqueteDeLadrillos.ladrillos(150)
+	assert.equals(paqueteDeLadrillos.bultos(), 2)
+	paqueteDeLadrillos.ladrillos(500)
+	assert.equals(paqueteDeLadrillos.bultos(), 3)	
+}
+
+test "ladrillos (quitar y agregar)" { //arena a granel y residuos radioactivos deberian funcionar igual.
+	paqueteDeLadrillos.agregarLadrillos(20)
+	paqueteDeLadrillos.quitarLadrillos(15)
+	assert.equals(paqueteDeLadrillos.ladrillos(), 5)
+	paqueteDeLadrillos.quitarLadrillos(10)
+	assert.equals(paqueteDeLadrillos.ladrillos(), 0)
+}
+
+test "residuos me esta dando problemas.jpg" {
+	assert.equals(residuosRadioactivos.peso(), 0)
+	residuosRadioactivos.agregarResiduos(15)
+	assert.equals(residuosRadioactivos.peso(), 15)
+	residuosRadioactivos.agregarResiduos(15)
+	assert.equals(residuosRadioactivos.peso(), 30)
+	camion.cargar(residuosRadioactivos)
+	assert.equals(residuosRadioactivos.peso(), 45)
+}
